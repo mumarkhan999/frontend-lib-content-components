@@ -46,7 +46,14 @@ export const saveBlock = ({ content, returnToUnit }) => (dispatch) => {
 
 export const fetchImages = ({ onSuccess }) => () => {
   // get images
-  onSuccess(mockData.mockImageData);
+  const processedData = Array.from(mockData.mockImageData, el => {
+    const sortDate = new Date(el.dateAdded.replace(" at", "")).getTime();
+    return {
+      ...el,
+      sortDate: sortDate,
+    }
+  });
+  return onSuccess(processedData);
 };
 
 export default StrictDict({
